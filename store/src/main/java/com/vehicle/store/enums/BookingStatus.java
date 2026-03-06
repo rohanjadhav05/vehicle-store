@@ -1,4 +1,5 @@
 package com.vehicle.store.enums;
 
-public class BookingStatus {
+public enum BookingStatus {
+    PENDING, CONFIRMED, CANCELLED
 }

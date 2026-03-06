@@ -1,0 +1,54 @@
+package com.vehicle.store.controller;
+
+
+import com.vehicle.store.dto.ApiResponse;
+import com.vehicle.store.dto.AuthResponse;
+import com.vehicle.store.dto.LoginRequest;
+import com.vehicle.store.dto.RegisterRequest;
+import com.vehicle.store.service.AuthService;
+import com.vehicle.store.util.SessionUtil;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/api/auth")
+@RequiredArgsConstructor
+@Tag(name = "Authentication", description = "Endpoints for user registration, login, and logout")
+@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
+public class AuthController {
+
+    private final AuthService authService;
+    private final SessionUtil sessionUtil;
+
+    @PostMapping("/register")
+    @Operation(summary = "Register a new user", description = "Creates a new user account")
+    public ResponseEntity<ApiResponse<AuthResponse>> register(@Valid @RequestBody RegisterRequest request) {
+        AuthResponse response = authService.register(request);
+        return ResponseEntity.ok(ApiResponse.success("User registered successfully", response));
+    }
+
+    @PostMapping("/login")
+    @Operation(summary = "Authenticate user", description = "Logs in a user and creates a session")
+    public ResponseEntity<ApiResponse<AuthResponse>> login(@Valid @RequestBody LoginRequest request, HttpServletRequest httpRequest) {
+        // Create session if it doesn't exist
+        HttpSession session = httpRequest.getSession(true);
+        AuthResponse response = authService.login(request, session);
+        return ResponseEntity.ok(ApiResponse.success("Login successful", response));
+    }
+    
+    @PostMapping("/logout")
+    @Operation(summary = "Logout user", description = "Invalidates the current user session")
+    public ResponseEntity<ApiResponse<Void>> logout(HttpServletRequest httpRequest) {
+        HttpSession session = httpRequest.getSession(false);
+        if (session != null) {
+            sessionUtil.invalidateSession(session);
+        }
+        return ResponseEntity.ok(ApiResponse.success("Logged out successfully", null));
+    }
+}

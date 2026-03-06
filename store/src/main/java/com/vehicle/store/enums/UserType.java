@@ -1,4 +1,5 @@
 package com.vehicle.store.enums;
 
-public class UserType {
+public enum UserType {
+    A, U
 }
