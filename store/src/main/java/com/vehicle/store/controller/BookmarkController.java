@@ -36,7 +36,7 @@ public class BookmarkController {
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Delete a bookmark", description = "Removes a vehicle bookmark from the user's saved list")
-    public ResponseEntity<ApiResponse<Void>> deleteBookmark(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> deleteBookmark(@PathVariable("id") Long id) {
         bookmarkService.deleteBookmark(id);
         return ResponseEntity.ok(ApiResponse.success("Bookmark deleted successfully", null));
     }

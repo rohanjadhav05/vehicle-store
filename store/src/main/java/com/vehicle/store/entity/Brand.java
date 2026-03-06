@@ -1,5 +1,6 @@
 package com.vehicle.store.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -34,5 +35,6 @@ public class Brand {
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "brand", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Vehicle> vehicles;
 }

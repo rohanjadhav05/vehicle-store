@@ -1,4 +1,5 @@
 package com.vehicle.store.entity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,5 +22,6 @@ public class FuelType {
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "fuelType", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Vehicle> vehicles;
 }

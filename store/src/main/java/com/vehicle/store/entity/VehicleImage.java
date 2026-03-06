@@ -1,5 +1,6 @@
 package com.vehicle.store.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -16,6 +17,7 @@ public class VehicleImage {
 
     @ManyToOne
     @JoinColumn(name = "vehicle_id", nullable = false)
+    @JsonIgnore
     private Vehicle vehicle;
 
     @Column(name = "image_url", length = 500, nullable = false)

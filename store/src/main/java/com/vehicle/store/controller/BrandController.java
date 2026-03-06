@@ -38,7 +38,7 @@ public class BrandController {
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('A')")
     @Operation(summary = "Delete a brand (Admin)", description = "Removes a vehicle brand. Requires Admin role.")
-    public ResponseEntity<ApiResponse<Void>> deleteBrand(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> deleteBrand(@PathVariable("id") Long id) {
         brandService.deleteBrand(id);
         return ResponseEntity.ok(ApiResponse.success("Brand deleted successfully", null));
     }

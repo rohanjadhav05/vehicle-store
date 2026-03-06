@@ -1,6 +1,7 @@
 package com.vehicle.store.entity;
 
 import com.vehicle.store.enums.BookingStatus;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -20,6 +21,7 @@ public class Booking {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
+    @JsonIgnore
     private User user;
 
     @ManyToOne

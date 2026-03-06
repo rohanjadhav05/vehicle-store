@@ -2,6 +2,7 @@ package com.vehicle.store.entity;
 
 
 import com.vehicle.store.enums.UserType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -24,6 +25,7 @@ public class User {
     private String username;
 
     @Column(name = "password", length = 255, nullable = false)
+    @JsonIgnore
     private String password;
 
     @Enumerated(EnumType.STRING)
@@ -40,10 +42,12 @@ public class User {
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Bookmark> bookmarks;
 
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Booking> bookings;
 }

@@ -47,7 +47,7 @@ public class BookingController {
     @PreAuthorize("hasRole('A')")
     @Operation(summary = "Update booking status (Admin)", description = "Updates the status of an existing booking. Requires Admin role.")
     public ResponseEntity<ApiResponse<Booking>> updateBookingStatus(
-            @PathVariable Long id,
+            @PathVariable("id") Long id,
             @Valid @RequestBody BookingStatusUpdateRequest request) {
         return ResponseEntity.ok(ApiResponse.success("Booking status updated successfully", bookingService.updateBookingStatus(id, request.getStatus())));
     }

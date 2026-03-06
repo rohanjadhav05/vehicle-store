@@ -41,7 +41,7 @@ public class VehicleImageController {
     @DeleteMapping("/images/{imageId}")
     @PreAuthorize("hasRole('A')")
     @Operation(summary = "Delete vehicle image (Admin)", description = "Removes a vehicle image. Requires Admin role.")
-    public ResponseEntity<ApiResponse<Void>> deleteVehicleImage(@PathVariable Long imageId) {
+    public ResponseEntity<ApiResponse<Void>> deleteVehicleImage(@PathVariable("imageId") Long imageId) {
         vehicleImageService.deleteImage(imageId);
         return ResponseEntity.ok(ApiResponse.success("Vehicle image deleted successfully", null));
     }

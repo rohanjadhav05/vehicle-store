@@ -43,6 +43,13 @@ public class BookingService {
         Vehicle vehicle = vehicleRepository.findById(request.getVehicleId())
                 .orElseThrow(() -> new ResourceNotFoundException("Vehicle not found"));
 
+        if (vehicle.getStock() == null || vehicle.getStock() <= 0) {
+            throw new IllegalArgumentException("Vehicle is out of stock");
+        }
+
+        vehicle.setStock(vehicle.getStock() - 1);
+        vehicleRepository.save(vehicle);
+
         Booking booking = Booking.builder()
                 .user(user)
                 .vehicle(vehicle)

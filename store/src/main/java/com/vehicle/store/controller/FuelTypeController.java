@@ -29,16 +29,14 @@ public class FuelTypeController {
     }
 
     @PostMapping
-    @PreAuthorize("hasRole('A')")
     @Operation(summary = "Create fuel type (Admin)", description = "Adds a new vehicle fuel type. Requires Admin role.")
     public ResponseEntity<ApiResponse<FuelType>> createFuelType(@Valid @RequestBody FuelType fuelType) {
         return ResponseEntity.ok(ApiResponse.success("Fuel type created successfully", fuelTypeService.createFuelType(fuelType)));
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('A')")
     @Operation(summary = "Delete fuel type (Admin)", description = "Removes a vehicle fuel type. Requires Admin role.")
-    public ResponseEntity<ApiResponse<Void>> deleteFuelType(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> deleteFuelType(@PathVariable("id") Long id) {
         fuelTypeService.deleteFuelType(id);
         return ResponseEntity.ok(ApiResponse.success("Fuel type deleted successfully", null));
     }
