@@ -17,7 +17,7 @@ import java.util.List;
 @RequestMapping("/api/fuel-types")
 @RequiredArgsConstructor
 @Tag(name = "Fuel Types", description = "Endpoints for managing vehicle fuel types")
-@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
+@CrossOrigin(originPatterns = "*", allowCredentials = "true")
 public class FuelTypeController {
 
     private final FuelTypeService fuelTypeService;

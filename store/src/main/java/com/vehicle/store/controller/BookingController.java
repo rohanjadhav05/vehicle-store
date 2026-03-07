@@ -19,7 +19,7 @@ import java.util.List;
 @RequestMapping("/api/bookings")
 @RequiredArgsConstructor
 @Tag(name = "Bookings", description = "Endpoints for managing vehicle bookings")
-@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
+@CrossOrigin(originPatterns = "*", allowCredentials = "true")
 public class BookingController {
 
     private final BookingService bookingService;

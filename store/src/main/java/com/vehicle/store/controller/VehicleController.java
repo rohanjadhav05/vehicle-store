@@ -21,7 +21,7 @@ import java.util.Map;
 @RequestMapping("/api/vehicles")
 @RequiredArgsConstructor
 @Tag(name = "Vehicles", description = "Endpoints for managing vehicles in the store")
-@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
+@CrossOrigin(originPatterns = "*", allowCredentials = "true")
 public class VehicleController {
 
     private final VehicleService vehicleService;

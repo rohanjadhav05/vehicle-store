@@ -17,7 +17,7 @@ import java.util.List;
 @RequestMapping("/api/brands")
 @RequiredArgsConstructor
 @Tag(name = "Brands", description = "Endpoints for managing vehicle brands")
-@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
+@CrossOrigin(originPatterns = "*", allowCredentials = "true")
 public class BrandController {
 
     private final BrandService brandService;

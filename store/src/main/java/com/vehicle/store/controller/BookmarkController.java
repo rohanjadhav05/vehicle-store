@@ -17,7 +17,7 @@ import java.util.List;
 @RequestMapping("/api/bookmarks")
 @RequiredArgsConstructor
 @Tag(name = "Bookmarks", description = "Endpoints for managing user vehicle bookmarks")
-@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
+@CrossOrigin(originPatterns = "*", allowCredentials = "true")
 public class BookmarkController {
 
     private final BookmarkService bookmarkService;

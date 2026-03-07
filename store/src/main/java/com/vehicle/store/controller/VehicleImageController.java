@@ -18,7 +18,7 @@ import java.util.List;
 @RequestMapping("/api/vehicles")
 @RequiredArgsConstructor
 @Tag(name = "Vehicle Images", description = "Endpoints for managing vehicle images")
-@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
+@CrossOrigin(originPatterns = "*", allowCredentials = "true")
 public class VehicleImageController {
 
     private final VehicleImageService vehicleImageService;
