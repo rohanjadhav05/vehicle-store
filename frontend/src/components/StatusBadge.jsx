@@ -4,7 +4,7 @@ const StatusBadge = ({ status }) => {
   let styleClasses = "bg-slate-100 text-slate-700";
 
   if (status === 'PENDING') {
-    styleClasses = "bg-amber-100 text-amber-700";
+    styleClasses = "bg-[#FEF3C7] text-[#92400E]";
   } else if (status === 'CONFIRMED') {
     styleClasses = "bg-green-100 text-green-700";
   } else if (status === 'CANCELLED') {

@@ -26,6 +26,9 @@ const AddVehicle = () => {
   // Specs array builder [{key: '', value: ''}]
   const [specs, setSpecs] = useState([{ key: '', value: '' }]);
 
+  // Photos array builder [{url: ''}]
+  const [photos, setPhotos] = useState([{ url: '' }]);
+
   useEffect(() => {
     const fetchSelectOptions = async () => {
       try {
@@ -56,6 +59,15 @@ const AddVehicle = () => {
   const addSpecRow = () => setSpecs([...specs, { key: '', value: '' }]);
   const removeSpecRow = (index) => setSpecs(specs.filter((_, i) => i !== index));
 
+  const handlePhotoChange = (index, value) => {
+    const newPhotos = [...photos];
+    newPhotos[index].url = value;
+    setPhotos(newPhotos);
+  };
+
+  const addPhotoRow = () => setPhotos([...photos, { url: '' }]);
+  const removePhotoRow = (index) => setPhotos(photos.filter((_, i) => i !== index));
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -74,6 +86,7 @@ const AddVehicle = () => {
       brandId: parseInt(formData.brandId, 10),
       fuelTypeId: parseInt(formData.fuelTypeId, 10),
       specs: JSON.stringify(specsObj),
+      photoUrls: photos.map(p => p.url).filter(url => url.trim() !== ''),
       thumbnailUrl: formData.thumbnailUrl,
       name: formData.name
     };
@@ -95,7 +108,7 @@ const AddVehicle = () => {
       <div className="flex items-center gap-4 mb-8">
         <button
           onClick={() => navigate('/admin/vehicles')}
-          className="p-2 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors"
+          className="p-2 bg-white border border-[#BFDBFE] rounded-lg hover:bg-[#F8FAFF] transition-colors"
         >
           ⬅️ Back
         </button>
@@ -105,14 +118,14 @@ const AddVehicle = () => {
         </div>
       </div>
 
-      <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-8">
+      <div className="bg-white rounded-2xl shadow-sm border border-[#DBEAFE] p-8">
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div>
               <label className="block text-sm font-medium text-slate-700 mb-1">Name / Model *</label>
               <input
                 type="text" name="name" required value={formData.name} onChange={handleInputChange}
-                className="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                className="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#1E3A5F] focus:outline-none"
               />
             </div>
 
@@ -120,7 +133,7 @@ const AddVehicle = () => {
               <label className="block text-sm font-medium text-slate-700 mb-1">Brand *</label>
               <select
                 name="brandId" required value={formData.brandId} onChange={handleInputChange}
-                className="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white"
+                className="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#1E3A5F] focus:outline-none bg-white"
               >
                 <option value="" disabled>Select a brand</option>
                 {brands.map(b => (
@@ -133,7 +146,7 @@ const AddVehicle = () => {
               <label className="block text-sm font-medium text-slate-700 mb-1">Fuel Type *</label>
               <select
                 name="fuelTypeId" required value={formData.fuelTypeId} onChange={handleInputChange}
-                className="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white"
+                className="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#1E3A5F] focus:outline-none bg-white"
               >
                 <option value="" disabled>Select fuel type</option>
                 {fuelTypes.map(f => (
@@ -146,7 +159,7 @@ const AddVehicle = () => {
               <label className="block text-sm font-medium text-slate-700 mb-1">Price ($) *</label>
               <input
                 type="number" step="0.01" name="price" required value={formData.price} onChange={handleInputChange}
-                className="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                className="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#1E3A5F] focus:outline-none"
               />
             </div>
 
@@ -154,7 +167,7 @@ const AddVehicle = () => {
               <label className="block text-sm font-medium text-slate-700 mb-1">Stock Quantity *</label>
               <input
                 type="number" name="stock" required value={formData.stock} onChange={handleInputChange}
-                className="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                className="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#1E3A5F] focus:outline-none"
               />
             </div>
 
@@ -162,7 +175,7 @@ const AddVehicle = () => {
               <label className="block text-sm font-medium text-slate-700 mb-1">Thumbnail URL</label>
               <input
                 type="url" name="thumbnailUrl" value={formData.thumbnailUrl} onChange={handleInputChange}
-                className="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                className="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#1E3A5F] focus:outline-none"
               />
             </div>
           </div>
@@ -171,11 +184,39 @@ const AddVehicle = () => {
             <label className="block text-sm font-medium text-slate-700 mb-1">Description</label>
             <textarea
               name="description" rows="4" value={formData.description} onChange={handleInputChange}
-              className="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              className="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#1E3A5F] focus:outline-none"
             />
           </div>
 
-          <div className="border-t border-slate-100 pt-6">
+          <div className="border-t border-[#DBEAFE] pt-6">
+            <h3 className="text-lg font-bold text-slate-800 mb-4">Gallery Photos</h3>
+            <p className="text-sm text-slate-500 mb-4">Add additional image URLs. These will be displayed in the slider.</p>
+            <div className="space-y-3">
+              {photos.map((photo, index) => (
+                <div key={index} className="flex gap-4 items-center">
+                  <input
+                    type="url" placeholder="https://example.com/image.jpg" value={photo.url}
+                    onChange={(e) => handlePhotoChange(index, e.target.value)}
+                    className="flex-1 px-4 py-2 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#1E3A5F] focus:outline-none"
+                  />
+                  <button
+                    type="button" onClick={() => removePhotoRow(index)}
+                    className="p-2 text-red-500 hover:bg-red-50 rounded-lg transition-colors border border-transparent shadow-sm"
+                  >
+                    🗑️
+                  </button>
+                </div>
+              ))}
+              <button
+                type="button" onClick={addPhotoRow}
+                className="mt-2 text-sm font-medium text-[#1E3A5F] border border-[#BFDBFE] bg-[#F8FAFF] px-4 py-2 rounded-xl hover:bg-[#DBEAFE] transition-colors"
+              >
+                + Add Photo
+              </button>
+            </div>
+          </div>
+
+          <div className="border-t border-[#DBEAFE] pt-6">
             <h3 className="text-lg font-bold text-slate-800 mb-4">Specifications</h3>
             <div className="space-y-3">
               {specs.map((spec, index) => (
@@ -183,12 +224,12 @@ const AddVehicle = () => {
                   <input
                     type="text" placeholder="Key (e.g. Engine)" value={spec.key}
                     onChange={(e) => handleSpecChange(index, 'key', e.target.value)}
-                    className="flex-1 px-4 py-2 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                    className="flex-1 px-4 py-2 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#1E3A5F] focus:outline-none"
                   />
                   <input
                     type="text" placeholder="Value (e.g. 2.0L Turbo)" value={spec.value}
                     onChange={(e) => handleSpecChange(index, 'value', e.target.value)}
-                    className="flex-1 px-4 py-2 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                    className="flex-1 px-4 py-2 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#1E3A5F] focus:outline-none"
                   />
                   <button
                     type="button" onClick={() => removeSpecRow(index)}
@@ -200,23 +241,23 @@ const AddVehicle = () => {
               ))}
               <button
                 type="button" onClick={addSpecRow}
-                className="mt-2 text-sm font-medium text-blue-600 border border-blue-200 bg-blue-50 px-4 py-2 rounded-xl hover:bg-blue-100 transition-colors"
+                className="mt-2 text-sm font-medium text-[#1E3A5F] border border-[#BFDBFE] bg-[#F8FAFF] px-4 py-2 rounded-xl hover:bg-[#DBEAFE] transition-colors"
               >
                 + Add Spec
               </button>
             </div>
           </div>
 
-          <div className="pt-6 border-t border-slate-100 flex justify-end gap-4">
+          <div className="pt-6 border-t border-[#DBEAFE] flex justify-end gap-4">
             <button
               type="button" onClick={() => navigate('/admin/vehicles')}
-              className="px-6 py-3 border border-slate-200 text-slate-600 font-bold rounded-xl hover:bg-slate-50 transition-colors"
+              className="px-6 py-3 border border-[#BFDBFE] text-slate-600 font-bold rounded-xl hover:bg-[#F8FAFF] transition-colors"
             >
               Cancel
             </button>
             <button
               type="submit" disabled={loading}
-              className="px-8 py-3 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 transition-colors flex items-center justify-center min-w-[120px]"
+              className="px-8 py-3 bg-[#1E3A5F] text-white font-bold rounded-xl hover:bg-[#163050] transition-colors flex items-center justify-center min-w-[120px]"
             >
               {loading ? <Loader inline /> : 'Save Vehicle'}
             </button>

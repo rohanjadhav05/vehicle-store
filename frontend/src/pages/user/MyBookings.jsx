@@ -26,7 +26,7 @@ const MyBookings = () => {
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-      <div className="mb-10 flex items-center gap-3 border-b border-slate-100 pb-6">
+      <div className="mb-10 flex items-center gap-3 border-b border-[#DBEAFE] pb-6">
         <span className="text-4xl">📦</span>
         <div>
           <h1 className="text-3xl font-extrabold text-slate-800 tracking-tight">My Bookings</h1>
@@ -43,7 +43,7 @@ const MyBookings = () => {
           {bookingState.bookings.map((booking) => (
             <div
               key={booking.id}
-              className="bg-white rounded-2xl shadow-sm border border-slate-100 p-5 flex flex-col sm:flex-row items-start sm:items-center gap-6 hover:shadow-md transition-shadow"
+              className="bg-white rounded-2xl shadow-sm border border-[#DBEAFE] p-5 flex flex-col sm:flex-row items-start sm:items-center gap-6 hover:shadow-md transition-shadow"
             >
               <div className="w-full sm:w-40 h-28 bg-slate-100 rounded-xl overflow-hidden shrink-0 border border-slate-50">
                 <img
@@ -63,7 +63,7 @@ const MyBookings = () => {
                       {booking.vehicle?.brand?.name} • ${booking.vehicle?.price?.toLocaleString()}
                     </p>
                   </div>
-                  <div className="shrink-0 flex items-center justify-between sm:flex-col sm:items-end gap-2 w-full sm:w-auto mt-2 sm:mt-0 pt-4 sm:pt-0 border-t sm:border-0 border-slate-100">
+                  <div className="shrink-0 flex items-center justify-between sm:flex-col sm:items-end gap-2 w-full sm:w-auto mt-2 sm:mt-0 pt-4 sm:pt-0 border-t sm:border-0 border-[#DBEAFE]">
                     <StatusBadge status={booking.status} />
                     <span className="text-xs font-semibold text-slate-400">
                       ID: #{booking.id.toString().padStart(6, '0')}

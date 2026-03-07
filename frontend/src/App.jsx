@@ -27,7 +27,16 @@ import AddVehicle from './pages/admin/AddVehicle';
 import EditVehicle from './pages/admin/EditVehicle';
 import AllBookings from './pages/admin/AllBookings';
 
+import { useRecoilValue } from 'recoil';
+import { authAtom } from './recoil/authAtom';
 
+const RootRedirect = () => {
+  const auth = useRecoilValue(authAtom);
+  if (auth?.isLoggedIn && auth?.userType === 'A') {
+    return <Navigate to="/admin/dashboard" replace />;
+  }
+  return <Navigate to="/vehicles" replace />;
+};
 
 function App() {
   return (
@@ -37,8 +46,12 @@ function App() {
         <Navbar />
         <main className="flex-grow">
           <Routes>
-            <Route path="/" element={<Navigate to="/vehicles" replace />} />
-            
+            <Route
+              path="/"
+              element={<RootRedirect />}
+            />
+
+
             {/* Public */}
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />

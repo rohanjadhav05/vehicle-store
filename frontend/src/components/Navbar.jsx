@@ -26,21 +26,31 @@ const Navbar = () => {
   };
 
   const navLinkClass = ({ isActive }) =>
-    `font-medium transition-colors ${isActive ? 'text-blue-600 border-b-2 border-blue-600' : 'text-slate-600 hover:text-blue-600'
+    `font-medium transition-colors ${isActive ? 'text-[#1E3A5F] border-b-2 border-[#1E3A5F]' : 'text-slate-600 hover:text-[#1E3A5F]'
     } py-2 px-1`;
 
   return (
-    <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-100 shadow-sm">
+    <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-[#DBEAFE] shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2">
-            <span className="text-2xl">🚗</span>
-            <span className="font-bold text-xl text-blue-600 tracking-tight">Turno</span>
+            <img src="/favicon.svg" alt="VeloDrive Logo" className="w-8 h-8 drop-shadow-sm" />
+            <span className="font-bold text-xl text-[#1E3A5F] tracking-tight">VeloDrive</span>
           </Link>
 
           {/* Center Links */}
           <div className="hidden md:flex space-x-8">
+            {auth.isLoggedIn && auth.userType === 'A' && (
+              <>
+                <NavLink to="/admin/dashboard" className={navLinkClass}>
+                  Dashboard
+                </NavLink>
+                <NavLink to="/admin/vehicles" className={navLinkClass}>
+                  Manage Vehicles
+                </NavLink>
+              </>
+            )}
             <NavLink to="/brands" className={navLinkClass}>
               Brands
             </NavLink>
@@ -57,11 +67,6 @@ const Navbar = () => {
                 </NavLink>
               </>
             )}
-            {auth.isLoggedIn && auth.userType === 'A' && (
-              <NavLink to="/admin/dashboard" className={navLinkClass}>
-                Dashboard
-              </NavLink>
-            )}
           </div>
 
           {/* Right Actions */}
@@ -70,13 +75,13 @@ const Navbar = () => {
               <>
                 <Link
                   to="/login"
-                  className="font-medium text-slate-600 hover:text-blue-600 px-3 py-2 transition-colors"
+                  className="font-medium text-slate-600 hover:text-[#1E3A5F] px-3 py-2 transition-colors"
                 >
                   Log in
                 </Link>
                 <Link
                   to="/register"
-                  className="bg-blue-600 text-white font-medium rounded-xl px-4 py-2 hover:bg-blue-700 transition-colors shadow-sm"
+                  className="bg-[#1E3A5F] text-white font-medium rounded-xl px-4 py-2 hover:bg-[#163050] transition-colors shadow-sm"
                 >
                   Sign up
                 </Link>
@@ -88,7 +93,7 @@ const Navbar = () => {
                 </span>
                 <button
                   onClick={handleLogout}
-                  className="border border-slate-200 text-slate-600 font-medium rounded-xl px-4 py-2 hover:bg-slate-50 transition-colors"
+                  className="border border-[#BFDBFE] text-slate-600 font-medium rounded-xl px-4 py-2 hover:bg-[#F8FAFF] transition-colors"
                 >
                   Log out
                 </button>

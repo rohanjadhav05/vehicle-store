@@ -43,29 +43,28 @@ const Dashboard = () => {
         brandSummaries: []
       };
 
-      // Calculate brand breakdown
+      // Calculate brand/model/fuelType breakdown
       const brandMap = {};
       vehicles.forEach(v => {
-        console.log(v, " name ", v.name)
         const bName = v.brand?.name || 'Unknown';
-        if (!brandMap[bName]) {
-          brandMap[bName] = { brand: bName, models: [], stock: 0, petrol: 0, diesel: 0, electric: 0 };
-        }
-        if (v.name && !brandMap[bName].models.includes(v.name)) {
-          brandMap[bName].models.push(v.name);
-        }
-        brandMap[bName].stock += (v.stock || 0);
+        const mName = v.name || 'Unknown';
+        const fName = v.fuelType?.name || 'Unknown';
+        const key = `${bName}_${mName}_${fName}`;
 
-        const fName = (v.fuelType?.name || '').toUpperCase();
-        if (fName.includes('PETROL')) brandMap[bName].petrol += 1;
-        else if (fName.includes('DIESEL')) brandMap[bName].diesel += 1;
-        else if (fName.includes('ELECTRIC')) brandMap[bName].electric += 1;
+        if (!brandMap[key]) {
+          brandMap[key] = { brand: bName, model: mName, stock: 0, sold: 0, rejected: 0, fuelType: fName };
+        }
+        brandMap[key].stock += (v.stock || 0);
+
+        const soldCount = bookings.filter(b => b.vehicle?.id === v.id && b.status === 'CONFIRMED').length;
+        const rejectedCount = bookings.filter(b => b.vehicle?.id === v.id && b.status === 'CANCELLED').length;
+        brandMap[key].sold += soldCount;
+        brandMap[key].rejected += rejectedCount;
       });
 
-      // Sort alphabetically by brand
+      // Sort alphabetically by brand and then model
       summaryPayload.brandSummaries = Object.values(brandMap)
-        .map(b => ({ ...b, models: b.models.join(', ') || '-' }))
-        .sort((a, b) => a.brand.localeCompare(b.brand));
+        .sort((a, b) => a.brand.localeCompare(b.brand) || a.model.localeCompare(b.model));
       setSummary(summaryPayload);
     } catch (err) {
       console.error(err);
@@ -99,10 +98,10 @@ const Dashboard = () => {
   // { totalVehicles, totalBrands, totalBookings, pendingBookings, brandSummaries: [{ brand, total, petrol, diesel, electric }] }
   // Fallback map if the actual structure differs slightly
   const stats = [
-    { label: 'Total Vehicles', value: summary.totalVehicles || 0, icon: '🚗', color: 'border-l-blue-500' },
+    { label: 'Total Vehicles', value: summary.totalVehicles || 0, icon: '🚗', color: 'border-l-[#1E3A5F]' },
     { label: 'Total Brands', value: summary.totalBrands || 0, icon: '🏷️', color: 'border-l-purple-500', cursor: 'cursor-pointer hover:bg-purple-50', onClick: () => navigate('/brands') },
     { label: 'Completed Bookings', value: summary.completedBookingsCount || 0, icon: '✅', color: 'border-l-emerald-500', cursor: 'cursor-pointer hover:bg-emerald-50', onClick: () => setShowCompleted(!showCompleted) },
-    { label: 'Pending Bookings', value: summary.pendingBookingsCount || 0, icon: '⏳', color: 'border-l-amber-500', cursor: 'cursor-pointer hover:bg-amber-50', onClick: () => setShowPending(!showPending) },
+    { label: 'Pending Bookings', value: summary.pendingBookingsCount || 0, icon: '⏳', color: 'border-l-[#D97706]', cursor: 'cursor-pointer hover:bg-[#FEF3C7]', onClick: () => setShowPending(!showPending) },
     { label: 'Rejected Bookings', value: summary.rejectedBookingsCount || 0, icon: '❌', color: 'border-l-red-500', cursor: 'cursor-pointer hover:bg-red-50', onClick: () => setShowRejected(!showRejected) },
   ];
 
@@ -122,7 +121,7 @@ const Dashboard = () => {
           </button>
           <button
             onClick={() => navigate('/admin/vehicles/add')}
-            className="bg-blue-600 text-white font-bold rounded-xl px-5 py-2.5 hover:bg-blue-700 transition-colors shadow-sm flex items-center justify-center gap-2"
+            className="bg-[#1E3A5F] text-white font-bold rounded-xl px-5 py-2.5 hover:bg-[#163050] transition-colors shadow-sm flex items-center justify-center gap-2"
           >
             <span>➕</span> Add Vehicle
           </button>
@@ -135,9 +134,9 @@ const Dashboard = () => {
           <div
             key={idx}
             onClick={stat.onClick}
-            className={`bg-white rounded-xl shadow-sm border border-slate-100 p-6 flex items-center gap-4 ${stat.color} border-l-4 ${stat.cursor || ''} transition-colors`}
+            className={`bg-white rounded-xl shadow-sm border border-[#DBEAFE] p-6 flex items-center gap-4 ${stat.color} border-l-4 ${stat.cursor || ''} transition-colors`}
           >
-            <div className="text-4xl bg-slate-50 p-3 rounded-xl">{stat.icon}</div>
+            <div className="text-4xl bg-[#F8FAFF] p-3 rounded-xl">{stat.icon}</div>
             <div>
               <p className="text-sm font-medium text-slate-500">{stat.label}</p>
               <h3 className="text-2xl font-bold text-slate-800">{stat.value}</h3>
@@ -151,17 +150,17 @@ const Dashboard = () => {
         <div className="mb-12 animate-fade-in">
           <h2 className="text-xl font-bold text-slate-800 mb-4 flex items-center gap-2">
             ⏳ Pending Approvals
-            <span className="bg-amber-100 text-amber-700 text-sm py-0.5 px-2.5 rounded-full">{summary.pendingBookingsList?.length || 0}</span>
+            <span className="bg-[#FEF3C7] text-[#92400E] text-sm py-0.5 px-2.5 rounded-full">{summary.pendingBookingsList?.length || 0}</span>
           </h2>
           {summary.pendingBookingsList?.length === 0 ? (
-            <div className="bg-white rounded-xl shadow-sm border border-slate-100 p-8 text-center text-slate-500">
+            <div className="bg-white rounded-xl shadow-sm border border-[#DBEAFE] p-8 text-center text-slate-500">
               No pending bookings at the moment.
             </div>
           ) : (
-            <div className="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden">
+            <div className="bg-white rounded-xl shadow-sm border border-[#DBEAFE] overflow-hidden">
               <div className="overflow-x-auto">
                 <table className="min-w-full divide-y divide-slate-200">
-                  <thead className="bg-slate-50">
+                  <thead className="bg-[#F8FAFF]">
                     <tr>
                       <th className="px-6 py-4 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">Customer</th>
                       <th className="px-6 py-4 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">Vehicle</th>
@@ -171,7 +170,7 @@ const Dashboard = () => {
                   </thead>
                   <tbody className="bg-white divide-y divide-slate-100">
                     {summary.pendingBookingsList.map(booking => (
-                      <tr key={booking.id} className="hover:bg-slate-50 transition-colors">
+                      <tr key={booking.id} className="hover:bg-[#F8FAFF] transition-colors">
                         <td className="px-6 py-4 whitespace-nowrap text-sm font-semibold text-slate-800">
                           {booking.user?.username || 'Unknown'}
                         </td>
@@ -183,7 +182,7 @@ const Dashboard = () => {
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500">
                           {actionLoading === booking.id ? (
-                            <span className="text-blue-500 font-medium">Updating...</span>
+                            <span className="text-[#1E3A5F] font-medium">Updating...</span>
                           ) : (
                             <div className="flex items-center gap-2">
                               <button
@@ -219,29 +218,35 @@ const Dashboard = () => {
             <span className="bg-emerald-100 text-emerald-700 text-sm py-0.5 px-2.5 rounded-full">{summary.completedBookingsList?.length || 0}</span>
           </h2>
           {summary.completedBookingsList?.length === 0 ? (
-            <div className="bg-white rounded-xl shadow-sm border border-slate-100 p-8 text-center text-slate-500">
+            <div className="bg-white rounded-xl shadow-sm border border-[#DBEAFE] p-8 text-center text-slate-500">
               No completed bookings.
             </div>
           ) : (
-            <div className="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden">
+            <div className="bg-white rounded-xl shadow-sm border border-[#DBEAFE] overflow-hidden">
               <div className="overflow-x-auto">
                 <table className="min-w-full divide-y divide-slate-200">
-                  <thead className="bg-slate-50">
+                  <thead className="bg-[#F8FAFF]">
                     <tr>
                       <th className="px-6 py-4 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">Customer</th>
                       <th className="px-6 py-4 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">Vehicle</th>
+                      <th className="px-6 py-4 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">Fuel Type</th>
                       <th className="px-6 py-4 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">Date</th>
                       <th className="px-6 py-4 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">Status</th>
                     </tr>
                   </thead>
                   <tbody className="bg-white divide-y divide-slate-100">
                     {summary.completedBookingsList.map(booking => (
-                      <tr key={booking.id} className="hover:bg-slate-50 transition-colors">
+                      <tr key={booking.id} className="hover:bg-[#F8FAFF] transition-colors">
                         <td className="px-6 py-4 whitespace-nowrap text-sm font-semibold text-slate-800">
                           {booking.user?.username || 'Unknown'}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-600">
                           <span className="font-bold">{booking.vehicle?.name}</span>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500">
+                          <span className="bg-slate-100 text-slate-600 px-2 py-1 rounded-md text-xs font-medium">
+                            {booking.vehicle?.fuelType?.name || 'Unknown'}
+                          </span>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500">
                           {new Date(booking.bookedAt || booking.createdAt).toLocaleDateString()}
@@ -269,29 +274,35 @@ const Dashboard = () => {
             <span className="bg-red-100 text-red-700 text-sm py-0.5 px-2.5 rounded-full">{summary.rejectedBookingsList?.length || 0}</span>
           </h2>
           {summary.rejectedBookingsList?.length === 0 ? (
-            <div className="bg-white rounded-xl shadow-sm border border-slate-100 p-8 text-center text-slate-500">
+            <div className="bg-white rounded-xl shadow-sm border border-[#DBEAFE] p-8 text-center text-slate-500">
               No rejected bookings.
             </div>
           ) : (
-            <div className="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden">
+            <div className="bg-white rounded-xl shadow-sm border border-[#DBEAFE] overflow-hidden">
               <div className="overflow-x-auto">
                 <table className="min-w-full divide-y divide-slate-200">
-                  <thead className="bg-slate-50">
+                  <thead className="bg-[#F8FAFF]">
                     <tr>
                       <th className="px-6 py-4 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">Customer</th>
                       <th className="px-6 py-4 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">Vehicle</th>
+                      <th className="px-6 py-4 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">Fuel Type</th>
                       <th className="px-6 py-4 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">Date</th>
                       <th className="px-6 py-4 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">Status</th>
                     </tr>
                   </thead>
                   <tbody className="bg-white divide-y divide-slate-100">
                     {summary.rejectedBookingsList.map(booking => (
-                      <tr key={booking.id} className="hover:bg-slate-50 transition-colors">
+                      <tr key={booking.id} className="hover:bg-[#F8FAFF] transition-colors">
                         <td className="px-6 py-4 whitespace-nowrap text-sm font-semibold text-slate-800">
                           {booking.user?.username || 'Unknown'}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-600">
                           <span className="font-bold">{booking.vehicle?.name}</span>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500">
+                          <span className="bg-slate-100 text-slate-600 px-2 py-1 rounded-md text-xs font-medium">
+                            {booking.vehicle?.fuelType?.name || 'Unknown'}
+                          </span>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500">
                           {new Date(booking.bookedAt || booking.createdAt).toLocaleDateString()}
@@ -311,42 +322,44 @@ const Dashboard = () => {
         </div>
       )}
 
-      {/* Vehicle Summary by Brand */}
-      <h2 className="text-xl font-bold text-slate-800 mb-6">Vehicle Inventory by Brand</h2>
-      <div className="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden">
+      {/* Vehicle Summary by Brand, Model, and Fuel Type */}
+      <h2 className="text-xl font-bold text-slate-800 mb-6">Vehicle Inventory Breakdown</h2>
+      <div className="bg-white rounded-xl shadow-sm border border-[#DBEAFE] overflow-hidden">
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-slate-200">
-            <thead className="bg-slate-50">
+            <thead className="bg-[#F8FAFF]">
               <tr>
                 <th scope="col" className="px-6 py-4 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">Brand</th>
-                <th scope="col" className="px-6 py-4 text-center text-xs font-bold text-slate-500 uppercase tracking-wider">Models</th>
+                <th scope="col" className="px-6 py-4 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">Models</th>
                 <th scope="col" className="px-6 py-4 text-center text-xs font-bold text-slate-500 uppercase tracking-wider">Available Stock</th>
-                <th scope="col" className="px-6 py-4 text-center text-xs font-bold text-slate-500 uppercase tracking-wider">Petrol Models</th>
-                <th scope="col" className="px-6 py-4 text-center text-xs font-bold text-slate-500 uppercase tracking-wider">Diesel Models</th>
-                <th scope="col" className="px-6 py-4 text-center text-xs font-bold text-slate-500 uppercase tracking-wider">Electric Models</th>
+                <th scope="col" className="px-6 py-4 text-center text-xs font-bold text-slate-500 uppercase tracking-wider">Sold Car</th>
+                <th scope="col" className="px-6 py-4 text-center text-xs font-bold text-slate-500 uppercase tracking-wider">Rejected Car</th>
+                <th scope="col" className="px-6 py-4 text-center text-xs font-bold text-slate-500 uppercase tracking-wider">Fuel Type</th>
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-slate-100">
               {summary.brandSummaries && summary.brandSummaries.length > 0 ? (
                 summary.brandSummaries.map((b, idx) => (
-                  <tr key={idx} className="hover:bg-slate-50 transition-colors">
+                  <tr key={idx} className="hover:bg-[#F8FAFF] transition-colors">
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-bold text-slate-800">
                       {b.brand}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-center font-medium text-slate-600">
-                      {b.models}
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-600">
+                      {b.model}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-center font-bold text-blue-600">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-center font-bold text-[#1E3A5F]">
                       {b.stock}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-center text-slate-500">
-                      {b.petrol}
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-center font-bold text-emerald-600">
+                      {b.sold}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-center font-bold text-red-600">
+                      {b.rejected}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-center text-slate-500">
-                      {b.diesel}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-center text-slate-500">
-                      {b.electric}
+                      <span className="bg-slate-100 text-slate-600 px-2 py-1 rounded-md text-xs font-medium">
+                        {b.fuelType}
+                      </span>
                     </td>
                   </tr>
                 ))

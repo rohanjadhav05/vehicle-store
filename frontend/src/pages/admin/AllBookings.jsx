@@ -53,10 +53,10 @@ const AllBookings = () => {
       ) : bookings.length === 0 ? (
         <EmptyState icon="📝" message="No bookings have been made yet." />
       ) : (
-        <div className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+        <div className="bg-white rounded-2xl shadow-sm border border-[#DBEAFE] overflow-hidden">
           <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-slate-200">
-              <thead className="bg-slate-50">
+              <thead className="bg-[#F8FAFF]">
                 <tr>
                   <th scope="col" className="px-6 py-4 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">ID</th>
                   <th scope="col" className="px-6 py-4 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">Customer</th>
@@ -68,7 +68,7 @@ const AllBookings = () => {
               </thead>
               <tbody className="bg-white divide-y divide-slate-100">
                 {bookings.map((booking) => (
-                  <tr key={booking.id} className="hover:bg-slate-50 transition-colors">
+                  <tr key={booking.id} className="hover:bg-[#F8FAFF] transition-colors">
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-semibold text-slate-800">
                       #{booking.id}
                     </td>
@@ -89,7 +89,7 @@ const AllBookings = () => {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500">
                       {actionLoading === booking.id ? (
-                        <span className="text-blue-500">Updating...</span>
+                        <span className="text-[#1E3A5F]">Updating...</span>
                       ) : (
                         <div className="flex items-center gap-2">
                           {booking.status === 'PENDING' && (

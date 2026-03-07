@@ -46,7 +46,7 @@ const FilterPanel = () => {
   };
 
   return (
-    <div className="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+    <div className="bg-white p-6 rounded-2xl shadow-sm border border-[#DBEAFE]">
       <h3 className="font-bold text-lg text-slate-800 mb-6 flex items-center gap-2">
         <span>⚙️</span> Filters
       </h3>
@@ -58,7 +58,7 @@ const FilterPanel = () => {
             name="brandId"
             value={localFilters.brandId || ''}
             onChange={handleChange}
-            className="w-full px-3 py-2 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="w-full px-3 py-2 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#1E3A5F] focus:border-[#1E3A5F]"
           >
             <option value="">All Brands</option>
             {brands.map((b) => (
@@ -75,7 +75,7 @@ const FilterPanel = () => {
             name="fuelTypeId"
             value={localFilters.fuelTypeId || ''}
             onChange={handleChange}
-            className="w-full px-3 py-2 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="w-full px-3 py-2 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#1E3A5F] focus:border-[#1E3A5F]"
           >
             <option value="">All Fuel Types</option>
             {fuelTypes.map((ft) => (
@@ -95,7 +95,7 @@ const FilterPanel = () => {
               placeholder="Min"
               value={localFilters.minPrice}
               onChange={handleChange}
-              className="w-full px-3 py-2 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+              className="w-full px-3 py-2 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#1E3A5F] focus:border-[#1E3A5F] text-sm"
             />
             <span className="text-slate-400">-</span>
             <input
@@ -104,7 +104,7 @@ const FilterPanel = () => {
               placeholder="Max"
               value={localFilters.maxPrice}
               onChange={handleChange}
-              className="w-full px-3 py-2 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+              className="w-full px-3 py-2 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#1E3A5F] focus:border-[#1E3A5F] text-sm"
             />
           </div>
         </div>
@@ -112,13 +112,13 @@ const FilterPanel = () => {
         <div className="pt-4 flex flex-col gap-2">
           <button
             onClick={applyFilters}
-            className="w-full bg-blue-600 text-white font-medium rounded-xl py-2.5 hover:bg-blue-700 transition-colors"
+            className="w-full bg-[#1E3A5F] text-white font-medium rounded-xl py-2.5 hover:bg-[#163050] transition-colors"
           >
             Apply Filters
           </button>
           <button
             onClick={clearFilters}
-            className="w-full border border-slate-200 text-slate-600 font-medium rounded-xl py-2.5 hover:bg-slate-50 transition-colors"
+            className="w-full border border-[#BFDBFE] text-slate-600 font-medium rounded-xl py-2.5 hover:bg-[#F8FAFF] transition-colors"
           >
             Clear All
           </button>

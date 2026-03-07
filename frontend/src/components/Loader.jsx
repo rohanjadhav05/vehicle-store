@@ -11,7 +11,7 @@ const Loader = ({ fullScreen = false, inline = false }) => {
 
   const content = (
     <div className="flex items-center justify-center p-8">
-      <div className="w-10 h-10 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin"></div>
+      <div className="w-10 h-10 border-4 border-[#BFDBFE] border-t-[#1E3A5F] rounded-full animate-spin"></div>
     </div>
   );
 

@@ -7,7 +7,7 @@ const VehicleCard = ({ vehicle }) => {
   return (
     <div
       onClick={() => navigate(`/vehicles/${vehicle.id}`)}
-      className="bg-white rounded-2xl shadow-sm border border-slate-100 hover:shadow-md transition-all duration-200 cursor-pointer overflow-hidden group flex flex-col"
+      className="bg-white rounded-2xl shadow-sm border border-[#DBEAFE] hover:shadow-md transition-all duration-200 cursor-pointer overflow-hidden group flex flex-col"
     >
       <div className="relative h-48 w-full overflow-hidden bg-slate-100">
         <img
@@ -32,10 +32,10 @@ const VehicleCard = ({ vehicle }) => {
         </div>
 
         <div className="flex items-center justify-between mt-auto">
-          <span className="text-blue-600 font-bold text-xl">
+          <span className="text-[#1E3A5F] font-bold text-xl">
             ${vehicle.price?.toLocaleString()}
           </span>
-          <button className="text-sm font-medium text-blue-600 bg-blue-50 px-3 py-1.5 rounded-lg group-hover:bg-blue-600 group-hover:text-white transition-colors">
+          <button className="text-sm font-medium text-[#1E3A5F] bg-[#F8FAFF] px-3 py-1.5 rounded-lg group-hover:bg-[#1E3A5F] group-hover:text-white transition-colors">
             Details
           </button>
         </div>

@@ -40,7 +40,7 @@ const AddBrandModal = ({ isOpen, onClose, onSuccess }) => {
             <input
               type="text"
               required
-              className="w-full px-4 py-2 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full px-4 py-2 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#1E3A5F] focus:border-[#1E3A5F]"
               value={brandModal.name}
               onChange={(e) => setBrandModal({ ...brandModal, name: e.target.value })}
             />
@@ -49,7 +49,7 @@ const AddBrandModal = ({ isOpen, onClose, onSuccess }) => {
             <label className="block text-sm font-medium text-slate-700 mb-1">Country</label>
             <input
               type="text"
-              className="w-full px-4 py-2 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full px-4 py-2 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#1E3A5F] focus:border-[#1E3A5F]"
               value={brandModal.country}
               onChange={(e) => setBrandModal({ ...brandModal, country: e.target.value })}
             />
@@ -58,7 +58,7 @@ const AddBrandModal = ({ isOpen, onClose, onSuccess }) => {
             <label className="block text-sm font-medium text-slate-700 mb-1">Logo URL</label>
             <input
               type="url"
-              className="w-full px-4 py-2 border border-slate-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full px-4 py-2 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#1E3A5F] focus:border-[#1E3A5F]"
               value={brandModal.logoUrl}
               onChange={(e) => setBrandModal({ ...brandModal, logoUrl: e.target.value })}
             />

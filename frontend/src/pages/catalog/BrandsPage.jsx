@@ -53,17 +53,17 @@ const BrandsPage = () => {
             <div
               key={b.id}
               onClick={() => handleBrandClick(b.id)}
-              className="bg-white rounded-3xl p-8 shadow-sm border border-slate-100 flex flex-col items-center justify-center cursor-pointer hover:shadow-xl hover:border-blue-100 transform hover:-translate-y-2 transition-all duration-300 group"
+              className="bg-white rounded-3xl p-8 shadow-sm border border-[#DBEAFE] flex flex-col items-center justify-center cursor-pointer hover:shadow-xl hover:border-[#1E3A5F] transform hover:-translate-y-2 transition-all duration-300 group"
             >
-              <div className="w-24 h-24 bg-white border border-slate-50 text-blue-600 rounded-2xl flex items-center justify-center text-4xl mb-5 group-hover:scale-110 group-hover:-translate-y-1 shadow-sm transition-all duration-300 overflow-hidden">
+              <div className="w-24 h-24 bg-white border border-slate-50 text-[#1E3A5F] rounded-2xl flex items-center justify-center text-4xl mb-5 group-hover:scale-110 group-hover:-translate-y-1 shadow-sm transition-all duration-300 overflow-hidden">
                 {b.logoUrl ? (
                   <img src={b.logoUrl} alt={b.name} className="w-full h-full object-contain p-3" />
                 ) : (
-                  <span className="font-extrabold text-blue-200">{b.name.charAt(0).toUpperCase()}</span>
+                  <span className="font-extrabold text-[#BFDBFE]">{b.name.charAt(0).toUpperCase()}</span>
                 )}
               </div>
               <h3 className="text-xl font-bold text-slate-800 text-center">{b.name}</h3>
-              <p className="text-sm font-medium text-blue-600 mt-4 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300">
+              <p className="text-sm font-medium text-[#1E3A5F] mt-4 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300">
                 View Vehicles →
               </p>
             </div>
