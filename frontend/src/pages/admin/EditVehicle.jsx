@@ -131,9 +131,10 @@ const EditVehicle = () => {
       <div className="flex items-center gap-4 mb-8">
         <button
           onClick={() => navigate('/admin/vehicles')}
-          className="p-2 bg-white border border-[#BFDBFE] rounded-lg hover:bg-[#F8FAFF] transition-colors"
+          className="group flex items-center gap-2 px-4 py-2 bg-white border border-[#BFDBFE] rounded-xl text-[#1E3A5F] font-semibold hover:bg-[#F8FAFF] hover:border-[#1E3A5F] hover:shadow-md transition-all duration-300"
         >
-          ⬅️ Back
+          <span className="transform group-hover:-translate-x-1 transition-transform duration-300">←</span> 
+          <span>Back</span>
         </button>
         <div>
           <h1 className="text-3xl font-extrabold text-slate-800">Edit Vehicle</h1>
