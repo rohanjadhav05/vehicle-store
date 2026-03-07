@@ -37,7 +37,7 @@ public class Vehicle {
     @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
-    @Column(name = "thumbnail_url", length = 500)
+    @Column(name = "thumbnail_url", length = 1000)
     private String thumbnailUrl;
 
     @Column(name = "specs", columnDefinition = "JSON")
@@ -49,6 +49,11 @@ public class Vehicle {
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
+
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @OneToMany(mappedBy = "vehicle", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Photo> photos;
 
     @ToString.Exclude
     @EqualsAndHashCode.Exclude

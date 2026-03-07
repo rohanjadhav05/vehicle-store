@@ -128,7 +128,12 @@ const VehicleDetail = () => {
       setShowModal(false);
       navigate('/my-bookings');
     } catch (err) {
-      toast.error(err.response?.data?.message || 'Failed to create booking');
+      const errorMsg = err.response?.data?.message || 'Failed to create booking';
+      if (errorMsg.toLowerCase().includes('out of stock')) {
+        toast.error('Vehicle is out of stock, will notify once available');
+      } else {
+        toast.error(errorMsg);
+      }
     } finally {
       setBookingLoading(false);
     }
@@ -241,9 +246,15 @@ const VehicleDetail = () => {
                   <>
                     <button
                       onClick={() => auth.isLoggedIn ? setShowModal(true) : navigate('/login')}
-                      className="w-full bg-[#1E3A5F] text-white font-bold rounded-xl py-4 hover:bg-[#163050] transition-colors shadow-sm text-lg"
+                      disabled={vehicle.stock === 0}
+                      className={`w-full text-white font-bold rounded-xl py-4 transition-colors shadow-sm text-lg ${vehicle.stock === 0
+                          ? 'bg-slate-400 cursor-not-allowed opacity-80'
+                          : 'bg-[#1E3A5F] hover:bg-[#163050]'
+                        }`}
                     >
-                      {auth.isLoggedIn ? 'Book Now' : 'Login to Book'}
+                      {vehicle.stock === 0
+                        ? 'Out of Stock'
+                        : (auth.isLoggedIn ? 'Book Now' : 'Login to Book')}
                     </button>
 
                     <button
@@ -302,11 +313,11 @@ const VehicleDetail = () => {
 
       {/* Zoom Photo Modal */}
       {isZoomModalOpen && (
-        <div 
+        <div
           className="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 backdrop-blur-md cursor-zoom-out"
           onClick={() => setIsZoomModalOpen(false)}
         >
-          <button 
+          <button
             onClick={(e) => { e.stopPropagation(); setIsZoomModalOpen(false); }}
             className="absolute top-6 right-6 text-white bg-white/10 hover:bg-white/20 rounded-full p-2 transition-colors z-[110]"
           >
@@ -314,11 +325,11 @@ const VehicleDetail = () => {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
-          
+
           <div className="relative max-w-6xl w-full h-[85vh] flex items-center justify-center" onClick={(e) => e.stopPropagation()}>
-            <img 
-              src={vehicle.allPhotos[currentPhotoIndex].url} 
-              alt={`${vehicle.name} zoomed`} 
+            <img
+              src={vehicle.allPhotos[currentPhotoIndex].url}
+              alt={`${vehicle.name} zoomed`}
               className="max-w-full max-h-full object-contain rounded-lg shadow-2xl"
             />
             {vehicle.allPhotos.length > 1 && (

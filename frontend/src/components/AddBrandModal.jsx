@@ -10,7 +10,7 @@ const AddBrandModal = ({ isOpen, onClose, onSuccess }) => {
 
   const handleAddBrand = async (e) => {
     e.preventDefault();
-    if (!brandModal.name) return toast.error('Brand name is required');
+    if (!brandModal.name || !brandModal.name.trim()) return toast.error('Brand name is required');
     try {
       setIsSubmittingBrand(true);
       await createBrand({ name: brandModal.name, logoUrl: brandModal.logoUrl, country: brandModal.country });
@@ -40,6 +40,7 @@ const AddBrandModal = ({ isOpen, onClose, onSuccess }) => {
             <input
               type="text"
               required
+              maxLength={100}
               className="w-full px-4 py-2 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#1E3A5F] focus:border-[#1E3A5F]"
               value={brandModal.name}
               onChange={(e) => setBrandModal({ ...brandModal, name: e.target.value })}
@@ -49,6 +50,7 @@ const AddBrandModal = ({ isOpen, onClose, onSuccess }) => {
             <label className="block text-sm font-medium text-slate-700 mb-1">Country</label>
             <input
               type="text"
+              maxLength={100}
               className="w-full px-4 py-2 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#1E3A5F] focus:border-[#1E3A5F]"
               value={brandModal.country}
               onChange={(e) => setBrandModal({ ...brandModal, country: e.target.value })}
@@ -58,6 +60,7 @@ const AddBrandModal = ({ isOpen, onClose, onSuccess }) => {
             <label className="block text-sm font-medium text-slate-700 mb-1">Logo URL</label>
             <input
               type="url"
+              maxLength={1000}
               className="w-full px-4 py-2 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#1E3A5F] focus:border-[#1E3A5F]"
               value={brandModal.logoUrl}
               onChange={(e) => setBrandModal({ ...brandModal, logoUrl: e.target.value })}
@@ -74,7 +77,7 @@ const AddBrandModal = ({ isOpen, onClose, onSuccess }) => {
             <button
               type="submit"
               disabled={isSubmittingBrand}
-              className="flex-1 bg-purple-600 text-white font-bold rounded-xl py-3 hover:bg-purple-700 transition-colors disabled:opacity-70"
+              className="flex-1 bg-[#1E3A5F] text-white font-bold rounded-xl py-3 hover:bg-[#163050] transition-colors disabled:opacity-70"
             >
               {isSubmittingBrand ? 'Saving...' : 'Save'}
             </button>

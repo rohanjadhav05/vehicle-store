@@ -18,25 +18,30 @@ public class SessionUtil {
     }
 
     public Long getCurrentUserId(HttpSession session) {
+        if (session == null) return null;
         Object userId = session.getAttribute(USER_ID_KEY);
         return userId != null ? (Long) userId : null;
     }
 
     public String getCurrentUserType(HttpSession session) {
+        if (session == null) return null;
         Object userType = session.getAttribute(USER_TYPE_KEY);
         return userType != null ? (String) userType : null;
     }
 
     public boolean isLoggedIn(HttpSession session) {
-        return session.getAttribute(USER_ID_KEY) != null;
+        return session != null && session.getAttribute(USER_ID_KEY) != null;
     }
 
     public boolean isAdmin(HttpSession session) {
+        if (session == null) return false;
         String userType = getCurrentUserType(session);
         return "A".equals(userType);
     }
 
     public void invalidateSession(HttpSession session) {
-        session.invalidate();
+        if (session != null) {
+            session.invalidate();
+        }
     }
 }

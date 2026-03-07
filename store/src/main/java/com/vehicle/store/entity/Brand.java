@@ -22,7 +22,7 @@ public class Brand {
     @Column(name = "name", length = 100, nullable = false, unique = true)
     private String name;
 
-    @Column(name = "logo_url", length = 500)
+    @Column(name = "logo_url", length = 1000)
     private String logoUrl;
 
     @Column(name = "country", length = 100)

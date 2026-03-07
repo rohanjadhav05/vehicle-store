@@ -115,15 +115,15 @@ const Dashboard = () => {
         <div className="flex flex-col sm:flex-row gap-3">
           <button
             onClick={() => setIsBrandModalOpen(true)}
-            className="bg-purple-600 text-white font-bold rounded-xl px-5 py-2.5 hover:bg-purple-700 transition-colors shadow-sm flex items-center justify-center gap-2"
+            className="bg-[#D97706] text-white font-bold rounded-xl px-6 py-3 hover:bg-[#B45309] transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 flex items-center justify-center gap-2"
           >
             <span>➕</span> Add Brand
           </button>
           <button
             onClick={() => navigate('/admin/vehicles/add')}
-            className="bg-[#1E3A5F] text-white font-bold rounded-xl px-5 py-2.5 hover:bg-[#163050] transition-colors shadow-sm flex items-center justify-center gap-2"
+            className="bg-[#1E3A5F] text-white font-bold rounded-xl px-6 py-3 hover:bg-[#163050] transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 flex items-center justify-center gap-2"
           >
-            <span>➕</span> Add Vehicle
+            <span>✨</span> Add Vehicle
           </button>
         </div>
       </div>

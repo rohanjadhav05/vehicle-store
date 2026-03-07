@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Data
 public class VehicleRequest {
@@ -23,10 +24,12 @@ public class VehicleRequest {
     private BigDecimal price;
 
     private String description;
-    
+
     private String thumbnailUrl;
-    
+
     private String specs; // JSON string
-    
+
     private Integer stock;
+
+    private List<String> photoUrls;
 }

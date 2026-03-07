@@ -16,6 +16,17 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    if (!formData.username.trim() || !formData.email.trim() || !formData.password || !formData.confirmPassword) {
+      toast.error('Please fill in all mandatory fields');
+      return;
+    }
+
+    if (formData.password.length < 6) {
+      toast.error('Password must be at least 6 characters');
+      return;
+    }
+
     if (formData.password !== formData.confirmPassword) {
       toast.error('Passwords do not match');
       return;
@@ -57,6 +68,7 @@ const Register = () => {
             <input
               type="text"
               required
+              maxLength={100}
               className="appearance-none relative block w-full px-4 py-3 border border-slate-300 placeholder-slate-400 text-slate-900 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#1E3A5F] focus:border-[#1E3A5F] focus:z-10 sm:text-sm"
               placeholder="Pick a username"
               value={formData.username}
@@ -69,6 +81,7 @@ const Register = () => {
             <input
               type="email"
               required
+              maxLength={255}
               className="appearance-none relative block w-full px-4 py-3 border border-slate-300 placeholder-slate-400 text-slate-900 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#1E3A5F] focus:border-[#1E3A5F] focus:z-10 sm:text-sm"
               placeholder="you@example.com"
               value={formData.email}
@@ -82,6 +95,7 @@ const Register = () => {
               type="password"
               required
               minLength={6}
+              maxLength={255}
               className="appearance-none relative block w-full px-4 py-3 border border-slate-300 placeholder-slate-400 text-slate-900 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#1E3A5F] focus:border-[#1E3A5F] focus:z-10 sm:text-sm"
               placeholder="••••••••"
               value={formData.password}
@@ -95,6 +109,7 @@ const Register = () => {
               type="password"
               required
               minLength={6}
+              maxLength={255}
               className="appearance-none relative block w-full px-4 py-3 border border-slate-300 placeholder-slate-400 text-slate-900 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#1E3A5F] focus:border-[#1E3A5F] focus:z-10 sm:text-sm"
               placeholder="••••••••"
               value={formData.confirmPassword}

@@ -54,6 +54,17 @@ public class VehicleService {
                 .stock(request.getStock() != null ? request.getStock() : 0)
                 .build();
 
+        if (request.getPhotoUrls() != null && !request.getPhotoUrls().isEmpty()) {
+            List<com.vehicle.store.entity.Photo> photos = new java.util.ArrayList<>();
+            for (String url : request.getPhotoUrls()) {
+                photos.add(com.vehicle.store.entity.Photo.builder()
+                        .url(url)
+                        .vehicle(vehicle)
+                        .build());
+            }
+            vehicle.setPhotos(photos);
+        }
+
         return vehicleRepository.save(vehicle);
     }
 
@@ -74,6 +85,25 @@ public class VehicleService {
         vehicle.setSpecs(request.getSpecs());
         if (request.getStock() != null) {
             vehicle.setStock(request.getStock());
+        }
+
+        if (request.getPhotoUrls() != null && !request.getPhotoUrls().isEmpty()) {
+            List<com.vehicle.store.entity.Photo> existingPhotos = vehicle.getPhotos();
+            if (existingPhotos == null) {
+                existingPhotos = new java.util.ArrayList<>();
+                vehicle.setPhotos(existingPhotos);
+            }
+            // User requested to append new photos instead of clearing old ones
+            for (String url : request.getPhotoUrls()) {
+                // simple check to avoid duplicates if they pass the same exact url again
+                boolean exists = existingPhotos.stream().anyMatch(p -> p.getUrl().equals(url));
+                if (!exists) {
+                    existingPhotos.add(com.vehicle.store.entity.Photo.builder()
+                            .url(url)
+                            .vehicle(vehicle)
+                            .build());
+                }
+            }
         }
 
         return vehicleRepository.save(vehicle);
