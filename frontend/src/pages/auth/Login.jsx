@@ -32,10 +32,11 @@ const Login = () => {
       const data = await login(formData);
 
       setAuth({
-        userId: data.userId,
+        userId: data.id,
         username: data.username,
         userType: data.userType,
         isLoggedIn: true,
+        token: data.token,
       });
 
       toast.success('Login successful!');

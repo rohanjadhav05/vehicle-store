@@ -14,6 +14,7 @@ const getInitialState = () => {
     username: null,
     userType: null, // 'A' or 'U'
     isLoggedIn: false,
+    token: null,
   };
 };
 

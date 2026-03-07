@@ -10,6 +10,26 @@ const axiosInstance = axios.create({
   withCredentials: true,
 });
 
+axiosInstance.interceptors.request.use(
+  (config) => {
+    const authStateStr = localStorage.getItem('authState');
+    if (authStateStr) {
+      try {
+        const authState = JSON.parse(authStateStr);
+        if (authState && authState.token) {
+          config.headers.Authorization = `Bearer ${authState.token}`;
+        }
+      } catch (e) {
+        console.error("Failed to parse authState from localStorage");
+      }
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
 axiosInstance.interceptors.response.use(
   (response) => {
     // Check if the backend response is an ApiResponse wrapped object

@@ -8,7 +8,7 @@ import com.vehicle.store.enums.UserType;
 import com.vehicle.store.exception.AccessDeniedException;
 import com.vehicle.store.exception.DuplicateResourceException;
 import com.vehicle.store.repository.UserRepository;
-import jakarta.servlet.http.HttpSession;
+import com.vehicle.store.security.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -19,7 +19,7 @@ public class AuthService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final com.vehicle.store.util.SessionUtil sessionUtil;
+    private final JwtUtil jwtUtil;
 
     public AuthResponse register(RegisterRequest request) {
         if (userRepository.existsByUsername(request.getUsername())) {
@@ -38,15 +38,18 @@ public class AuthService {
 
         user = userRepository.save(user);
 
+        String token = jwtUtil.generateToken(user);
+        
         return AuthResponse.builder()
                 .id(user.getId())
                 .username(user.getUsername())
                 .email(user.getEmail())
                 .userType(user.getUserType().name())
+                .token(token)
                 .build();
     }
 
-    public AuthResponse login(LoginRequest request, HttpSession session) {
+    public AuthResponse login(LoginRequest request) {
         User user = userRepository.findByUsername(request.getUsername())
                 .orElseThrow(() -> new AccessDeniedException("Invalid username or password"));
 
@@ -54,13 +57,14 @@ public class AuthService {
             throw new AccessDeniedException("Invalid username or password");
         }
 
-        sessionUtil.setSession(session, user);
+        String token = jwtUtil.generateToken(user);
 
         return AuthResponse.builder()
                 .id(user.getId())
                 .username(user.getUsername())
                 .email(user.getEmail())
                 .userType(user.getUserType().name())
+                .token(token)
                 .build();
     }
 }

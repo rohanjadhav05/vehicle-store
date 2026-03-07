@@ -21,6 +21,7 @@ const Navbar = () => {
       username: null,
       userType: null,
       isLoggedIn: false,
+      token: null,
     });
     navigate('/login');
   };

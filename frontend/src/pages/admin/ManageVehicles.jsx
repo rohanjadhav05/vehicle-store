@@ -119,13 +119,13 @@ const ManageVehicles = () => {
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-600">
                       {vehicle.brand?.name}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-600 flex items-center gap-1">
-                      ⛽ {vehicle.fuelType?.name}
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-600">
+                      {vehicle.fuelType?.name}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-bold text-[#1E3A5F]">
                       ${vehicle.price?.toLocaleString()}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-600 text-center">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-600">
                       <span className={`px-2 py-1 rounded-md font-medium ${vehicle.stock > 0 ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-700'}`}>
                         {vehicle.stock}
                       </span>
