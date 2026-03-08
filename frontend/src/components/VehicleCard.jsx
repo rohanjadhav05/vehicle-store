@@ -33,7 +33,7 @@ const VehicleCard = ({ vehicle }) => {
 
         <div className="flex items-center justify-between mt-auto">
           <span className="text-[#1E3A5F] font-bold text-xl">
-            ${vehicle.price?.toLocaleString()}
+            ₹{vehicle.price?.toLocaleString()}
           </span>
           <button className="text-sm font-medium text-[#1E3A5F] bg-[#F8FAFF] px-3 py-1.5 rounded-lg group-hover:bg-[#1E3A5F] group-hover:text-white transition-colors">
             Details

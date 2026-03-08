@@ -84,7 +84,7 @@ const Bookmarks = () => {
                   </span>
                   <h3 className="font-bold text-slate-800 text-lg mb-2">{vehicle.name}</h3>
                   <div className="text-[#1E3A5F] font-extrabold text-xl mt-auto">
-                    ${vehicle.price?.toLocaleString()}
+                    ₹{vehicle.price?.toLocaleString()}
                   </div>
                 </div>
               </div>

@@ -193,7 +193,7 @@ const AddVehicle = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Price ($) *</label>
+              <label className="block text-sm font-medium text-slate-700 mb-1">Price (₹) *</label>
               <input
                 type="number" step="0.01" name="price" required value={formData.price} onChange={handleInputChange}
                 className="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-[#1E3A5F] focus:outline-none"

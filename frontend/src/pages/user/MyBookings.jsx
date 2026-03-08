@@ -60,7 +60,7 @@ const MyBookings = () => {
                       {booking.vehicle?.name}
                     </h3>
                     <p className="text-sm font-medium text-slate-500 mt-1">
-                      {booking.vehicle?.brand?.name} • ${booking.vehicle?.price?.toLocaleString()}
+                      {booking.vehicle?.brand?.name} • ₹{booking.vehicle?.price?.toLocaleString()}
                     </p>
                   </div>
                   <div className="shrink-0 flex items-center justify-between sm:flex-col sm:items-end gap-2 w-full sm:w-auto mt-2 sm:mt-0 pt-4 sm:pt-0 border-t sm:border-0 border-[#DBEAFE]">

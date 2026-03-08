@@ -236,7 +236,7 @@ const VehicleDetail = () => {
               <div className="mb-6">
                 <p className="text-slate-500 uppercase tracking-widest text-sm font-bold mb-1">Price</p>
                 <h3 className="text-4xl font-extrabold text-[#1E3A5F]">
-                  ${vehicle.price?.toLocaleString()}
+                  ₹{vehicle.price?.toLocaleString()}
                 </h3>
                 <p className="text-sm text-slate-400 mt-2">Available Stock: {vehicle.stock}</p>
               </div>
@@ -289,7 +289,7 @@ const VehicleDetail = () => {
           <div className="bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl transform transition-all">
             <h3 className="text-2xl font-bold text-slate-800 mb-2">Confirm Booking</h3>
             <p className="text-slate-600 mb-6">
-              You are about to book the <span className="font-bold">{vehicle.name}</span> for <span className="text-[#1E3A5F] font-bold">${vehicle.price?.toLocaleString()}</span>.
+              You are about to book the <span className="font-bold">{vehicle.name}</span> for <span className="text-[#1E3A5F] font-bold">₹{vehicle.price?.toLocaleString()}</span>.
             </p>
             <div className="flex gap-4">
               <button
